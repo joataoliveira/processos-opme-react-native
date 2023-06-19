@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Switch, SwitchBase, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Switch, SwitchBase, Text, TextInput, View, TouchableOpacity,Alert } from 'react-native';
 import PegarToken from '../api/pegar_token';
 import SeguradoControler from '../api/seguradoController';
 import { ListItem, Icon, Button } from 'react-native-elements'
 
-const ListaBeneficiarios = () => {
+const ListaBeneficiarios = ({ navigation, route }) => {
   const [users, setUsers] = useState([]);
   const [isLoading, setLoading] = useState(true)
 
@@ -47,7 +47,7 @@ const ListaBeneficiarios = () => {
           buttonStyle={{ minHeight: '100%', minWidth: '50%', backgroundColor: 'light-gray' }}
         />
         <Button
-          onPress={() => confirmUserDeletion(user)}
+          onPress={() => confirmSeguradoRemove(user)}
           icon={<Icon name="delete" size={25} color="red" />}
           buttonStyle={{ minHeight: '100%', minWidth: '50%', backgroundColor: 'gray' }}
         />
@@ -55,6 +55,26 @@ const ListaBeneficiarios = () => {
     )
   }
 
+  const loadForm = (user) => {
+    navigation.navigate('FormularioBeneficiario',{ user});
+  }
+
+  const confirmSeguradoRemove = async (user) => {
+    Alert.alert('Excluir Usuário', 'Deseja excluir o usuário?', [
+      {
+        text: 'Sim',
+        onPress() {
+          setLoading(true)
+          seguradoControler.removeSegurado(token,user);
+          getUsersNaAPI();
+          setLoading(false);
+        }
+      },
+      {
+        text: 'Não'
+      }
+    ])
+  }
 
   function getBeneficiariosItem({ item: user }) {
     return (
