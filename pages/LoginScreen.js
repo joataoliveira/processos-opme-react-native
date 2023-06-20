@@ -5,12 +5,16 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
-  StyleSheet
+  StyleSheet,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useContext } from 'react'
 import AppContext from '../context/AppContext'
 import PegarToken from '../api/pegar_token'
+import * as LocalAuthentication from 'expo-local-authentication'
 
 const LoginScreen = () => {
   const navigation = useNavigation()
@@ -19,6 +23,35 @@ const LoginScreen = () => {
   const controller = new PegarToken()
   const [usuario, setUsuario] = useState('')
   const [senha, setSenha] = useState('')
+
+  const handleBiometricAuth = async () => {
+    const hasBiometricAuth = await LocalAuthentication.hasHardwareAsync()
+
+    if (!hasBiometricAuth) {
+      // Dispositivo não suporta autenticação biométrica
+      return
+    }
+
+    const isEnrolled = await LocalAuthentication.isEnrolledAsync()
+
+    if (!isEnrolled) {
+      // Nenhuma biometria (impressão digital, reconhecimento facial, etc.) está cadastrada no dispositivo
+      console.log('erro nenhuma biometria')
+      return
+    }
+
+    const result = await LocalAuthentication.authenticateAsync()
+
+    if (result.success) {
+      // Autenticação biométrica bem-sucedida
+      // Realize ações de login aqui
+      console.log('Deu certo')
+      navigation.navigate('Tabs')
+    } else {
+      // Autenticação biométrica falhou ou foi cancelada pelo usuário
+      console.log('Falhou')
+    }
+  }
 
   const getUsersNaAPI = async () => {
     try {
@@ -39,7 +72,7 @@ const LoginScreen = () => {
           type: 'authUser', //especifica a ação
           payload: novaCredencial //dado necessário para ação
         })*/
-        navigation.navigate('Tabs')
+        handleBiometricAuth()
       } else if (credentials.respHTTP == 401) {
         setUsuario('')
         setSenha('')
@@ -55,49 +88,60 @@ const LoginScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Image source={require('../assets/logo.png')} style={styles.logo} />
-      <Text style={styles.title}>Processos OPME</Text>
-      <TextInput
-        placeholder="Usuário"
-        value={usuario}
-        style={styles.input}
-        textContentType="username"
-        autoCapitalize="none"
-        onChangeText={value => {
-          setUsuario(value)
-        }}
-      />
-      <TextInput
-        placeholder="Senha"
-        secureTextEntry
-        value={senha}
-        style={styles.input}
-        onChangeText={value => {
-          setSenha(value)
-        }}
-      />
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={() => getUsersNaAPI()}
-      >
-        <Text style={styles.loginText}>Entrar</Text>
-      </TouchableOpacity>
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.innerContainer}>
+          <Image source={require('../assets/logo.png')} style={styles.logo} />
+          <Text style={styles.title}>Processos OPME</Text>
+          <TextInput
+            placeholder="Usuário"
+            value={usuario}
+            style={styles.input}
+            textContentType="username"
+            autoCapitalize="none"
+            onChangeText={value => {
+              setUsuario(value)
+            }}
+          />
+          <TextInput
+            placeholder="Senha"
+            secureTextEntry
+            value={senha}
+            style={styles.input}
+            onChangeText={value => {
+              setSenha(value)
+            }}
+          />
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => getUsersNaAPI()}
+          >
+            <Text style={styles.loginText}>Entrar</Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
+  },
+  innerContainer: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingHorizontal: 20
   },
   logo: {
     width: 250,
     height: 250,
-    //marginBottom: 50,
     resizeMode: 'contain'
   },
   title: {
