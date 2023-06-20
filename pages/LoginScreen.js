@@ -37,6 +37,7 @@ const LoginScreen = () => {
     if (!isEnrolled) {
       // Nenhuma biometria (impressão digital, reconhecimento facial, etc.) está cadastrada no dispositivo
       console.log('erro nenhuma biometria')
+      navigation.navigate('Tabs')
       return
     }
 

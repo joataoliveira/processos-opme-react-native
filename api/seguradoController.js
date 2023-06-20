@@ -1,23 +1,24 @@
 import { Component } from 'react'
 
+const prefURI = 'http://localhost:3000'
+
 class SeguradoControler {
   pegarSegurados = async token => {
     try {
-      const uri = 'http://localhost:3000/segurados'
-      //const uri = 'http://172.20.3.232:3000/segurados'
+      const uri = prefURI + '/segurados'
       const response = await fetch(uri, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token['access_token']
+          Authorization: 'Bearer ' + token
         }
       })
       console.log('Listar Segurados: ')
       console.log(response.status)
       if (response.status == 200) {
         const segurados = await response.json()
-        console.log(segurados)
+        //console.log(segurados)
         return segurados
       } else {
         return null
@@ -32,13 +33,13 @@ class SeguradoControler {
       console.log('user do salvar')
       //console.log(token)
       //console.log(user)
-      const uri = 'http://localhost:3000/segurados'
+      const uri = prefURI + '/segurados'
       const response = await fetch(uri, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token['access_token']
+          Authorization: 'Bearer ' + token
         },
         body: JSON.stringify({
           nomeSegurado: user.nomeSegurado,
@@ -60,13 +61,13 @@ class SeguradoControler {
   removeSegurado = async (token, user) => {
     try {
       console.log('user do renove')
-      const uri = 'http://localhost:3000/segurados/' + user.id
+      const uri = prefURI + '/segurados/' + user.id
       const response = await fetch(uri, {
         method: 'DELETE',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token['access_token']
+          Authorization: 'Bearer ' + token
         }
       })
       console.log(response.status)
@@ -81,13 +82,13 @@ class SeguradoControler {
       console.log('update do salvar')
       //console.log(token)
       //console.log(user)
-      const uri = 'http://localhost:3000/segurados/' + user.id
+      const uri = prefURI + '/segurados/' + user.id
       const response = await fetch(uri, {
         method: 'PATCH',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token['access_token']
+          Authorization: 'Bearer ' + token
         },
         body: JSON.stringify({
           nomeSegurado: user.nomeSegurado,
