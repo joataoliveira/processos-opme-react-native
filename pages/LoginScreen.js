@@ -23,15 +23,15 @@ const LoginScreen = () => {
   const getUsersNaAPI = async () => {
     try {
       setLoading(true)
-      token = await controller.authUser(usuario, senha)
+      credentials = await controller.authUser(usuario, senha)
 
-      if (token != null) {
+      if (credentials.respHTTP == 201) {
         console.log('entrei')
 
-        var novaCredencial = {
-          login: usuario,
-          token: token.access_token
-        }
+        var novaCredencial = JSON.stringify({
+          login: credentials.login,
+          token: credentials.token
+        })
 
         console.log(novaCredencial)
 
@@ -40,6 +40,10 @@ const LoginScreen = () => {
           payload: novaCredencial //dado necessário para ação
         })*/
         navigation.navigate('Tabs')
+      } else if (credentials.respHTTP == 401) {
+        setUsuario('')
+        setSenha('')
+        alert('Usuário e/ou senha inválidos!')
       }
     } catch (error) {
       console.log('deu ruim')

@@ -16,15 +16,21 @@ class PegarToken {
           password: passwd
         })
       })
-      console.log('User Autenticado: ')
-      console.log(response.status)
-      if (response.status == 201) {
-        const credentials = await response.json()
-        console.log(credentials)
-        return credentials
-      } else {
-        return null
+      const credentials = {
+        respHTTP: response.status,
+        login: login,
+        token: ''
       }
+      //console.log(response.status)
+      if (response.status == 201) {
+        console.log('User Autenticado: ')
+        const respToken = await response.json()
+        credentials.token = respToken.access_token
+        console.log(credentials.token)
+      } else {
+        console.log('Nao autorizado! Erro de login e/ou senha.')
+      }
+      return credentials
     } catch (error) {
       console.error(error)
     }
