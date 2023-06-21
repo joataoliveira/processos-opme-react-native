@@ -8,26 +8,15 @@ import {
   TouchableOpacity
 } from 'react-native'
 import SeguradoControler from '../api/seguradoController'
-import PegarToken from '../api/pegar_token'
 import { TextInputMask } from 'react-native-masked-text'
+import AppContext from '../context/AppContext'
 
 const FormularioBeneficiario = ({ navigation, route }) => {
-  //console.warn(route.params);
-  //console.log(route.params);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
-  const [selectedDate, setSelectedDate] = useState('')
-
   const [user, setUser] = useState(
     route.params ? (route.params.user ? route.params.user : {}) : {}
   )
-
+  const { state, dispatch } = useContext(AppContext)
   var seguradoControler = new SeguradoControler()
-  var controller = new PegarToken()
-  var token
-
-  let getUsersNaAPI = async () => {
-    token = await controller.authUser('admin', 'admin')
-  }
 
   return (
     <View style={styles.form}>
@@ -54,14 +43,14 @@ const FormularioBeneficiario = ({ navigation, route }) => {
         style={styles.input}
         onChangeText={carteira => setUser({ ...user, carteira })}
         placeholder="Informe o número da carteira"
-        value={user.carteira}
+        value={user.carteira.carteira}
       />
       <Text style={styles.label}>Via da carteira</Text>
       <TextInput
         style={styles.input}
         onChangeText={viaCarteira => setUser({ ...user, viaCarteira })}
         placeholder="Via"
-        value={user.viaCarteira}
+        value={user.viaCarteira.carteira.toString()}
       />
       <TouchableOpacity
         style={styles.button}
@@ -72,7 +61,7 @@ const FormularioBeneficiario = ({ navigation, route }) => {
             navigation.navigate('ListClients')
           } else {
             await getUsersNaAPI()
-            seguradoControler.saveSegurado(token.token, user)
+            seguradoControler.saveSegurado(state.credentials.token, user)
           }
         }}
       >

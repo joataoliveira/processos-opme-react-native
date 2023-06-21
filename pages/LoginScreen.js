@@ -29,6 +29,8 @@ const LoginScreen = () => {
 
     if (!hasBiometricAuth) {
       // Dispositivo não suporta autenticação biométrica
+      console.log('Nao ha suporte a biometria no dispositivo')
+
       return
     }
 
@@ -36,7 +38,7 @@ const LoginScreen = () => {
 
     if (!isEnrolled) {
       // Nenhuma biometria (impressão digital, reconhecimento facial, etc.) está cadastrada no dispositivo
-      console.log('erro nenhuma biometria')
+      console.log('Nao existe digital cadastrada no dispositivo')
       navigation.navigate('Tabs')
       return
     }
@@ -54,25 +56,32 @@ const LoginScreen = () => {
     }
   }
 
-  const getUsersNaAPI = async () => {
+  const submeteLogin = async () => {
     try {
       setLoading(true)
+      console.log('banana')
+      //console.log(state)
+      //console.log(dispatch)
+
       credentials = await controller.authUser(usuario, senha)
 
       if (credentials.respHTTP == 201) {
-        console.log('entrei')
+        console.log('sucesso no login')
 
         var novaCredencial = JSON.stringify({
-          login: credentials.login,
-          token: credentials.token
+          credentials: {
+            login: credentials.login,
+            token: credentials.token
+          }
         })
 
-        console.log(novaCredencial)
+        //console.log(credentials)
 
-        /*dispatch({
+        await dispatch({
           type: 'authUser', //especifica a ação
-          payload: novaCredencial //dado necessário para ação
-        })*/
+          payload: credentials //dado necessário para ação
+        })
+
         handleBiometricAuth()
       } else if (credentials.respHTTP == 401) {
         setUsuario('')
@@ -119,7 +128,7 @@ const LoginScreen = () => {
           />
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={() => getUsersNaAPI()}
+            onPress={() => submeteLogin()}
           >
             <Text style={styles.loginText}>Entrar</Text>
           </TouchableOpacity>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import {
   ActivityIndicator,
   FlatList,
@@ -14,22 +14,24 @@ import {
   RefreshControl,
   ScrollView
 } from 'react-native'
-import PegarToken from '../api/pegar_token'
 import SeguradoControler from '../api/seguradoController'
 import { ListItem, Icon, Button } from 'react-native-elements'
+import AppContext from '../context/AppContext'
 
 const ListaBeneficiarios = ({ navigation, route }) => {
   const [users, setUsers] = useState([])
   const [isLoading, setLoading] = useState(true)
+  const { state, dispatch } = useContext(AppContext)
 
-  var controller = new PegarToken()
   var seguradoControler = new SeguradoControler()
 
   const getUsersNaAPI = async () => {
     try {
       setLoading(true)
-      token = await controller.authUser('admin', 'admin')
-      const resposta = await seguradoControler.pegarSegurados(token.token)
+      console.log(state)
+      const resposta = await seguradoControler.pegarSegurados(
+        state.credentials.token
+      )
       setUsers(resposta)
     } catch (error) {
       setUsers([])
@@ -87,7 +89,7 @@ const ListaBeneficiarios = ({ navigation, route }) => {
         text: 'Sim',
         onPress() {
           setLoading(true)
-          seguradoControler.removeSegurado(token.token, user)
+          seguradoControler.removeSegurado(state.credentials.token, user)
           getUsersNaAPI()
           setLoading(false)
         }
