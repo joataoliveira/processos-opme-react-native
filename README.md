@@ -17,7 +17,7 @@ Este é um projeto de aplicativo móvel desenvolvido em React Native para gerenc
 - Context API (gerenciamento de estado)
 - Expo Local Authentication (leitura biométrica)
 # API Backend
-A API utilizada por este projeto está disponível no repositório Processos OPME API. Certifique-se de configurar e executar a API antes de executar este projeto React Native.
+A API utilizada por este projeto está disponível no repositório [Processos OPME API](https://github.com/joataoliveira/processos-opme). Certifique-se de configurar e executar a API antes de executar este projeto React Native.
 
 # Como executar o projeto
 1. Certifique-se de ter o ambiente de desenvolvimento React Native configurado em sua máquina.
