@@ -80,7 +80,7 @@ const ListaBeneficiarios = ({ navigation, route }) => {
   }
 
   const loadForm = user => {
-    navigation.navigate('FormularioBeneficiario', { user })
+    navigation.navigate('Edição e Cadastro', { user })
   }
 
   const confirmSeguradoRemove = async user => {
