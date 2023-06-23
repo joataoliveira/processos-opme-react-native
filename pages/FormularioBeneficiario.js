@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   Text,
   View,
@@ -17,6 +17,11 @@ const FormularioBeneficiario = ({ navigation, route }) => {
   )
   const { state, dispatch } = useContext(AppContext)
   var seguradoControler = new SeguradoControler()
+  console.log(user)
+
+  const salvaSegurado = async () => {
+    await seguradoControler.saveSegurado(state.credentials.token, user)
+  }
 
   return (
     <View style={styles.form}>
@@ -41,16 +46,20 @@ const FormularioBeneficiario = ({ navigation, route }) => {
       <Text style={styles.label}>Carteira</Text>
       <TextInput
         style={styles.input}
-        onChangeText={carteira => setUser({ ...user, carteira })}
+        onChangeText={carteira =>
+          setUser({ ...user, carteira: { ...user.carteira, carteira } })
+        }
         placeholder="Informe o número da carteira"
-        value={user.carteira.carteira}
+        value={user.carteira?.carteira?.toString()}
       />
       <Text style={styles.label}>Via da carteira</Text>
       <TextInput
         style={styles.input}
-        onChangeText={viaCarteira => setUser({ ...user, viaCarteira })}
+        onChangeText={viaCarteira =>
+          setUser({ ...user, carteira: { ...user.carteira, viaCarteira } })
+        }
         placeholder="Via"
-        value={user.viaCarteira.carteira.toString()}
+        value={user.carteira?.viaCarteira?.toString()}
       />
       <TouchableOpacity
         style={styles.button}
@@ -60,8 +69,7 @@ const FormularioBeneficiario = ({ navigation, route }) => {
             updateClient()
             navigation.navigate('ListClients')
           } else {
-            await getUsersNaAPI()
-            seguradoControler.saveSegurado(state.credentials.token, user)
+            await seguradoControler.saveSegurado(state.credentials.token, user)
           }
         }}
       >
