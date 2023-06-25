@@ -39,7 +39,7 @@ const LoginScreen = () => {
     if (!isEnrolled) {
       // Nenhuma biometria (impressão digital, reconhecimento facial, etc.) está cadastrada no dispositivo
       console.log('Nao existe digital cadastrada no dispositivo')
-      navigation.navigate('Tabs')
+      navigation.navigate('Processos OPME')
       return
     }
 
@@ -49,7 +49,7 @@ const LoginScreen = () => {
       // Autenticação biométrica bem-sucedida
       // Realize ações de login aqui
       console.log('Deu certo')
-      navigation.navigate('Tabs')
+      navigation.navigate('Processos OPME')
     } else {
       // Autenticação biométrica falhou ou foi cancelada pelo usuário
       console.log('Falhou')
@@ -59,7 +59,7 @@ const LoginScreen = () => {
   const submeteLogin = async () => {
     try {
       setLoading(true)
-      console.log('banana')
+      //console.log('banana')
       //console.log(state)
       //console.log(dispatch)
 
@@ -67,13 +67,6 @@ const LoginScreen = () => {
 
       if (credentials.respHTTP == 201) {
         console.log('sucesso no login')
-
-        var novaCredencial = JSON.stringify({
-          credentials: {
-            login: credentials.login,
-            token: credentials.token
-          }
-        })
 
         //console.log(credentials)
 
@@ -170,7 +163,7 @@ const styles = StyleSheet.create({
   loginButton: {
     width: '80%',
     height: 50,
-    backgroundColor: '#55b586',
+    backgroundColor: '#3D8A55',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5

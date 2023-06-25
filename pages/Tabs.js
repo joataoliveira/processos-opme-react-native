@@ -39,66 +39,70 @@ function Profile() {
 
 const Tabs = ({ navigation }) => {
   const Tab = createBottomTabNavigator()
+
   return (
-    <Tab.Navigator
-      initialRouteName="Feed"
-      screenOptions={{
-        tabBarActiveTintColor: '#e91e63'
-      }}
-    >
-      <Tab.Screen
-        name="Feed"
-        component={Feed}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          )
+    <View style={{ flex: 1 }}>
+      <Tab.Navigator
+        initialRouteName="Feed"
+        screenOptions={{
+          tabBarActiveTintColor: '#3D8A55'
         }}
-      />
-      <Tab.Screen
-        name="Lista de Beneficiários"
-        component={ListaBeneficiarios}
-        options={{
-          tabBarLabel: 'Beneficiarios',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="account-group"
-              color={color}
-              size={size}
-            />
-          )
-        }}
-      />
-      <Tab.Screen
-        name="Edição e Cadastro"
-        component={FormularioBeneficiario}
-        options={{
-          tabBarLabel: 'Cadastro',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="account-edit"
-              color={color}
-              size={size}
-            />
-          )
-        }}
-      />
-      <Tab.Screen
-        name="Lista de Processos"
-        component={ListaProcessos}
-        options={{
-          tabBarLabel: 'Lista',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="list-status"
-              color={color}
-              size={size}
-            />
-          )
-        }}
-      />
-    </Tab.Navigator>
+      >
+        <Tab.Screen
+          name="Feed"
+          component={Feed}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="Lista de Beneficiários"
+          component={ListaBeneficiarios}
+          options={{
+            tabBarLabel: 'Beneficiarios',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="account-group"
+                color={color}
+                size={size}
+              />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="Edição e Cadastro"
+          component={FormularioBeneficiario}
+          options={{
+            tabBarLabel: 'Cadastro',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="account-edit"
+                color={color}
+                size={size}
+              />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="Lista de Processos"
+          component={ListaProcessos}
+          options={{
+            tabBarLabel: 'Lista',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="list-status"
+                color={color}
+                size={size}
+              />
+            )
+          }}
+        />
+      </Tab.Navigator>
+    </View>
   )
 }
+
 export { Tabs }

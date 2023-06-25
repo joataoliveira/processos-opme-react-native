@@ -152,31 +152,25 @@ const ListaBeneficiarios = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#ffD',
-    justifyContent: 'center',
-    alignItems: 'stretch'
-  },
-  container2: {
-    flex: 1,
-    flexDirection: 'column',
-    width: '100%',
-    padding: 10,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    backgroundColor: '#FFF'
   },
   item: {
-    backgroundColor: '#0AE',
+    backgroundColor: '#3D8A55',
     padding: 20,
-    margin: 10
+    marginVertical: 10,
+    marginHorizontal: 20,
+    borderRadius: 10
   },
   titulo: {
-    color: 'white',
+    color: '#FFF',
     textAlign: 'right'
   },
   buttonContainer: {
     flexDirection: 'row'
+  },
+  subtitle: {
+    color: '#6B527E',
+    fontSize: 14
   }
 })
-
 export { ListaBeneficiarios }

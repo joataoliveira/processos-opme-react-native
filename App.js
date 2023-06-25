@@ -11,9 +11,13 @@ export default function App() {
   return (
     <Provider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerLeft: null
+          }}
+        >
           <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Tabs" component={Tabs} />
+          <Stack.Screen name="Processos OPME" component={Tabs} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
