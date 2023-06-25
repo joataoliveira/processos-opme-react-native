@@ -18,7 +18,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { ListaBeneficiarios } from './ListaBeneficiarios'
 import { FormularioBeneficiario } from './FormularioBeneficiario'
 import SeguradoControler from '../api/seguradoController'
-import PegarToken from '../api/pegar_token'
 import { ListaProcessos } from './ListaProcessos.js'
 
 function Feed() {
