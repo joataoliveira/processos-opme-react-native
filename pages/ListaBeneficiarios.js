@@ -83,6 +83,10 @@ const ListaBeneficiarios = ({ navigation, route }) => {
     navigation.navigate('Edição e Cadastro', { user })
   }
 
+  const loadProc = user => {
+    navigation.navigate('Lista de Processos', { user })
+  }
+
   const confirmSeguradoRemove = async user => {
     Alert.alert('Excluir Usuário', 'Deseja excluir o usuário?', [
       {
@@ -107,7 +111,7 @@ const ListaBeneficiarios = ({ navigation, route }) => {
         bottomDivider
         rightContent={getActions(user)}
         rightStyle={styles.buttonContainer}
-        onPress={() => loadForm(user)}
+        onPress={() => loadProc(user)}
       >
         <ListItem.Content>
           <ListItem.Title>Id: {user.id}</ListItem.Title>

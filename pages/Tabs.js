@@ -19,6 +19,7 @@ import { ListaBeneficiarios } from './ListaBeneficiarios'
 import { FormularioBeneficiario } from './FormularioBeneficiario'
 import SeguradoControler from '../api/seguradoController'
 import PegarToken from '../api/pegar_token'
+import { ListaProcessos } from './ListaProcessos.js'
 
 function Feed() {
   return (
@@ -77,6 +78,20 @@ const Tabs = ({ navigation }) => {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="account-edit"
+              color={color}
+              size={size}
+            />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="Lista de Processos"
+        component={ListaProcessos}
+        options={{
+          tabBarLabel: 'Lista',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="list-status"
               color={color}
               size={size}
             />
