@@ -83,7 +83,7 @@ const ListaBeneficiarios = ({ navigation, route }) => {
     navigation.navigate('Edição e Cadastro', { user })
   }
 
-  const loadProc = user => {
+  const loadProc = user => {    
     navigation.navigate('Lista de Processos', { user })
   }
 
@@ -112,6 +112,7 @@ const ListaBeneficiarios = ({ navigation, route }) => {
         rightContent={getActions(user)}
         rightStyle={styles.buttonContainer}
         onPress={() => loadProc(user)}
+        
       >
         <ListItem.Content>
           <ListItem.Title>Id: {user.id}</ListItem.Title>

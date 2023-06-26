@@ -20,19 +20,31 @@ import AppContext from '../context/AppContext'
 
 const ListaProcessos = ({ navigation, route }) => {
   const [users, setUsers] = useState([])
+  const [seg, setSeg] = useState(
+    route.params ? (route.params.user ? route.params.user : {}) : {}
+  )
+  
+  console.log("Inicio da pagina")
+  console.log(route.params)
+  console.log(seg)
+  
   const [isLoading, setLoading] = useState(true)
   const { state, dispatch } = useContext(AppContext)
 
+  //console.log(seg)
   var seguradoProc = new SeguradoProc()
 
-  const getUsersNaAPI = async () => {
+  const getProcessos = async () => {
+
+
     try {
+
       setLoading(true)
-      console.log(state)
-      const resposta = await seguradoProc.pegarProcessos(
+      const resposta = await seguradoProc.pegarprocessos(
         state.credentials.token
       )
       setUsers(resposta)
+      
     } catch (error) {
       setUsers([])
       console.log(error)
@@ -60,8 +72,6 @@ const ListaProcessos = ({ navigation, route }) => {
       <ListItem.Swipeable
         key={user.id}
         bottomDivider
-        rightContent={getActions(user)}
-        rightStyle={styles.buttonContainer}
     
       >
         <ListItem.Content>
@@ -79,7 +89,7 @@ const ListaProcessos = ({ navigation, route }) => {
   }
 
   useEffect(() => {
-    getUsersNaAPI()
+    getProcessos()
   }, [])
 
   return (
