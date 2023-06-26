@@ -1,7 +1,7 @@
 import { Component } from 'react'
 
 // const prefURI = 'http://localhost:3000'
-const prefURI = 'http://localhost:3000'
+const prefURI = 'http://192.168.1.34:3000'
 
 class SeguradoProc {
   pegarprocessos = async token => {

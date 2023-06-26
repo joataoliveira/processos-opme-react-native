@@ -14,10 +14,13 @@
     "@react-navigation/stack": "^6.3.16",
     "expo": "~48.0.18",
     "expo-local-authentication": "~13.3.0",
+    "expo-localization": "~14.1.1",
+    "expo-location": "^15.1.1",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
     "react-native": "0.71.8",
     "react-native-elements": "^3.4.3",
+    "react-native-maps": "^1.7.1",
     "react-native-masked-text": "^1.13.0",
     "react-native-popup-menu": "^0.16.1",
     "react-native-vector-icons": "^9.2.0"
