@@ -19,6 +19,7 @@ import { ListaBeneficiarios } from './ListaBeneficiarios'
 import { FormularioBeneficiario } from './FormularioBeneficiario'
 import SeguradoControler from '../api/seguradoController'
 import { ListaProcessos } from './ListaProcessos.js'
+import { Localizacao } from './Localizacao'
 
 function Feed() {
   return (
@@ -48,8 +49,8 @@ const Tabs = ({ navigation }) => {
         }}
       >
         <Tab.Screen
-          name="Feed"
-          component={Feed}
+          name="Localização "
+          component={Localizacao}
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => (
