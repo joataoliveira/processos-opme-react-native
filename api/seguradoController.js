@@ -4,6 +4,7 @@ import { Component } from 'react'
 const prefURI = 'http://192.168.1.34:3000'
 
 class SeguradoControler {
+
   pegarSegurados = async token => {
     try {
       const uri = prefURI + '/segurados'
@@ -46,8 +47,8 @@ class SeguradoControler {
           nomeSegurado: user.nomeSegurado,
           dataNascimento: user.dataNascimento,
           carteira: {
-            carteira: user.carteira,
-            viaCarteira: user.viaCarteira
+            carteira: user.carteira.carteira,
+            viaCarteira: user.carteira.viaCarteira
           }
         })
       })
@@ -61,7 +62,6 @@ class SeguradoControler {
 
   removeSegurado = async (token, user) => {
     try {
-      console.log('user do renove')
       const uri = prefURI + '/segurados/' + user.id
       const response = await fetch(uri, {
         method: 'DELETE',
@@ -80,9 +80,7 @@ class SeguradoControler {
 
   updateSegurado = async (token, user) => {
     try {
-      console.log('update do salvar')
-      //console.log(token)
-      //console.log(user)
+      console.log(user)
       const uri = prefURI + '/segurados/' + user.id
       const response = await fetch(uri, {
         method: 'PATCH',

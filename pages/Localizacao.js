@@ -9,9 +9,7 @@ const Localizacao = ({ navigation, route }) => {
     const [location, setLocation] = useState();
     const [address, setAddress] = useState();
 
-
-
-  /*  useEffect(() => {
+    useEffect(() => {
         const getPermissions = async () => {
           let { status } = await Location.requestForegroundPermissionsAsync();
           if (status !== 'granted') {
@@ -27,12 +25,10 @@ const Localizacao = ({ navigation, route }) => {
         getPermissions();
       }, []); 
 
-      */
-
-    
+        
     return (
         <View >
-            <MapView style={{with:'100%',height:'100%'}} showsUserLocation>
+            <MapView style={{with:'100%',height:'100%'}} initialRegion={location} showsUserLocation>
             <UrlTile maximumZ={19} ></UrlTile>
             </MapView>
         </View>
