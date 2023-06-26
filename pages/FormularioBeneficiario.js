@@ -65,11 +65,13 @@ const FormularioBeneficiario = ({ navigation, route }) => {
         style={styles.button}
         onPress={async () => {
           if (user.id != null) {
-            console.log('DEVE ATUALIZAR')
-            updateClient()
-            navigation.navigate('ListClients')
+            console.log('DEVE ATUALIZAR toke =>', state.credentials.token, 'user : ' , user)
+            await seguradoControler.updateSegurado(state.credentials.token, user)
+            //navigation.navigate('ListClients')
           } else {
+            console.log('DEVE SALVAR O NOVO toke =>', state.credentials.token, 'user : ' , user)
             await seguradoControler.saveSegurado(state.credentials.token, user)
+            //navigation.navigate('ListClients')
           }
         }}
       >
