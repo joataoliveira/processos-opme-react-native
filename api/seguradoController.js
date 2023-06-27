@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-const prefURI = 'http://localhost:3000'
+const prefURI = 'http://172.20.10.3:3000'
 //const prefURI = 'http://172.20.2.0:3000'
 
 class SeguradoControler {

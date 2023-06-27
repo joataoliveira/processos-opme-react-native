@@ -13,7 +13,7 @@ import MapView from 'react-native-maps'
 import AppContext from '../context/AppContext'
 
 const Localizacao = ({ navigation, route }) => {
-  const [location, setLocation] = useState()
+  const [location, setLocation] = useState(null)
   const [address, setAddress] = useState()
   const { state, dispatch } = useContext(AppContext)
 
@@ -27,8 +27,8 @@ const Localizacao = ({ navigation, route }) => {
 
       let currentLocation = await Location.getCurrentPositionAsync({})
       setLocation(currentLocation)
-      //console.log('Location:')
-      //console.log(currentLocation)
+      console.log('Location:')
+      console.log(currentLocation)
     }
     getPermissions()
   }, [])
@@ -36,13 +36,24 @@ const Localizacao = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.greeting}>
-        Olá, {state.credentials.login}! você está aqui:
+        Olá, {state.credentials.login}! Você está aqui:
       </Text>
-      <View style={styles.mapContainer}>
-        <MapView style={styles.map} initialRegion={location} showsUserLocation>
-          <UrlTile maximumZ={19}></UrlTile>
-        </MapView>
-      </View>
+      {location && (
+        <View style={styles.mapContainer}>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421
+            }}
+            showsUserLocation
+          >
+            <UrlTile maximumZ={19}></UrlTile>
+          </MapView>
+        </View>
+      )}
     </View>
   )
 }
