@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-const prefURI = 'http://172.20.10.3:3000'
+const prefURI = 'http://localhost:3000'
 //const prefURI = 'http://172.20.2.0:3000'
 
 class SeguradoControler {
@@ -53,6 +53,8 @@ class SeguradoControler {
       })
       console.log(response.status)
       const newClient = await response.json()
+
+      return response.status
       //console.log(newClient);
     } catch (error) {
       console.error(error)
@@ -95,6 +97,8 @@ class SeguradoControler {
       })
       console.log(response.status)
       const newClient = await response.json()
+
+      return response.status
       //console.log(newClient);
     } catch (error) {
       console.error(error)

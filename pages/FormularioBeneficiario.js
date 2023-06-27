@@ -17,11 +17,6 @@ const FormularioBeneficiario = ({ navigation, route }) => {
   )
   const { state, dispatch } = useContext(AppContext)
   var seguradoControler = new SeguradoControler()
-  console.log(user)
-
-  const salvaSegurado = async () => {
-    await seguradoControler.saveSegurado(state.credentials.token, user)
-  }
 
   return (
     <View style={styles.form}>
@@ -71,12 +66,27 @@ const FormularioBeneficiario = ({ navigation, route }) => {
             user
           )
           if (user.id != null) {
-            await seguradoControler.updateSegurado(
+            const resp = await seguradoControler.updateSegurado(
               state.credentials.token,
               user
             )
+            if (resp == 200) {
+              alert('Usuário atualizado!')
+              setUser({})
+            } else {
+              alert('Falha na edição. Tente novamente')
+            }
           } else {
-            await seguradoControler.saveSegurado(state.credentials.token, user)
+            const resp = await seguradoControler.saveSegurado(
+              state.credentials.token,
+              user
+            )
+            if (resp == 200 || resp == 201) {
+              alert('Usuário criado com sucesso!')
+              setUser({})
+            } else {
+              alert('Falha na criação. Tente novamente')
+            }
           }
         }}
       >
