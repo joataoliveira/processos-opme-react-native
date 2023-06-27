@@ -18,16 +18,12 @@ import SeguradoProc from '../api/processoSegurados'
 import { ListItem, Icon, Button } from 'react-native-elements'
 import AppContext from '../context/AppContext'
 
-const ListaProcessos = ({ navigation, route }) => {
+const ListaProcessos = ({ navigation, route, change }) => {
   const [users, setUsers] = useState([])
   const [seg, setSeg] = useState(
     route.params ? (route.params.user ? route.params.user : {}) : {}
   )
-  
-  console.log("Inicio da pagina")
-  console.log(route.params)
-  console.log(seg)
-  
+
   const [isLoading, setLoading] = useState(true)
   const { state, dispatch } = useContext(AppContext)
 
@@ -35,16 +31,24 @@ const ListaProcessos = ({ navigation, route }) => {
   var seguradoProc = new SeguradoProc()
 
   const getProcessos = async () => {
-
-
     try {
-
       setLoading(true)
-      const resposta = await seguradoProc.pegarprocessos(
-        state.credentials.token
-      )
-      setUsers(resposta)
-      
+      //console.log(seg)
+      if (seg.id == null) {
+        const resposta = await seguradoProc.pegarprocessos(
+          state.credentials.token,
+          0
+        )
+        setUsers(resposta)
+      } else {
+        console.log(seg.id)
+        const resp = await seguradoProc.pegarprocessos(
+          state.credentials.token,
+          seg.id
+        )
+
+        setUsers(resp)
+      }
     } catch (error) {
       setUsers([])
       console.log(error)
@@ -66,23 +70,24 @@ const ListaProcessos = ({ navigation, route }) => {
     )
   }*/
 
-  
   function getListProcessos({ item: user }) {
     return (
-      <ListItem.Swipeable
-        key={user.id}
-        bottomDivider
-    
-      >
+      <ListItem.Swipeable key={user.id} bottomDivider>
         <ListItem.Content>
-          <ListItem.Title>Id: {user.id}</ListItem.Title>
-          <ListItem.Subtitle>Segurado: {user.seqHospital}</ListItem.Subtitle>
-          <ListItem.Subtitle>
-            Data de Nascimento: {user.crmMedico}
-          </ListItem.Subtitle>
-          <ListItem.Subtitle>
-            Carteira: {user.seguradoId}
-          </ListItem.Subtitle>
+          <ListItem.Title>Número do processo: {user.id}</ListItem.Title>
+          <ListItem.Subtitle>Data: {user.dataProcesso}</ListItem.Subtitle>
+          <ListItem.Subtitle>Hospital: {user.seqHospital}</ListItem.Subtitle>
+          <ListItem.Subtitle>CRM medico: {user.crmMedico}</ListItem.Subtitle>
+          {user.segurado?.id && (
+            <>
+              <ListItem.Subtitle>
+                Segurado ID: {user.segurado.id}
+              </ListItem.Subtitle>
+              <ListItem.Subtitle>
+                Nome segurado: {user.segurado.nomeSegurado}
+              </ListItem.Subtitle>
+            </>
+          )}
         </ListItem.Content>
       </ListItem.Swipeable>
     )
@@ -103,6 +108,15 @@ const ListaProcessos = ({ navigation, route }) => {
           keyExtractor={item => item.id}
         />
       )}
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={() => {
+          user = {}
+          navigation.navigate('Lista de Processos', { user })
+        }}
+      >
+        <Text style={styles.buttonText}>Limpar Filtros</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -133,7 +147,16 @@ const styles = StyleSheet.create({
     textAlign: 'right'
   },
   buttonContainer: {
-    flexDirection: 'row'
+    position: 'absolute',
+    bottom: 20,
+    alignSelf: 'center',
+    backgroundColor: '#3D8A55',
+    padding: 10,
+    borderRadius: 10
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16
   }
 })
 

@@ -18,8 +18,8 @@ import * as LocalAuthentication from 'expo-local-authentication'
 class PegarToken {
   authUser = async (login, passwd) => {
     try {
-      const uri = 'http://172.20.2.0:3000/auth/login'
-      //const uri = 'http://localhost:3000/auth/login'
+      //const uri = 'http://172.20.2.0:3000/auth/login'
+      const uri = 'http://localhost:3000/auth/login'
       const response = await fetch(uri, {
         method: 'POST',
         headers: {

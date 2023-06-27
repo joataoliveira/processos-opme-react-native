@@ -69,7 +69,8 @@ const Tabs = ({ navigation }) => {
                 color={color}
                 size={size}
               />
-            )
+            ),
+            unmountOnBlur: true // Adicione essa opção
           }}
         />
         <Tab.Screen
@@ -83,7 +84,8 @@ const Tabs = ({ navigation }) => {
                 color={color}
                 size={size}
               />
-            )
+            ),
+            unmountOnBlur: true // Adicione essa opção
           }}
         />
         <Tab.Screen
@@ -97,7 +99,8 @@ const Tabs = ({ navigation }) => {
                 color={color}
                 size={size}
               />
-            )
+            ),
+            unmountOnBlur: true // Adicione essa opção
           }}
         />
       </Tab.Navigator>

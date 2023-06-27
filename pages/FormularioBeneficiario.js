@@ -64,14 +64,19 @@ const FormularioBeneficiario = ({ navigation, route }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={async () => {
+          console.log(
+            'DEVE ATUALIZAR token =>',
+            state.credentials.token,
+            'user : ',
+            user
+          )
           if (user.id != null) {
-            console.log('DEVE ATUALIZAR toke =>', state.credentials.token, 'user : ' , user)
-            await seguradoControler.updateSegurado(state.credentials.token, user)
-            //navigation.navigate('ListClients')
+            await seguradoControler.updateSegurado(
+              state.credentials.token,
+              user
+            )
           } else {
-            console.log('DEVE SALVAR O NOVO toke =>', state.credentials.token, 'user : ' , user)
             await seguradoControler.saveSegurado(state.credentials.token, user)
-            //navigation.navigate('ListClients')
           }
         }}
       >

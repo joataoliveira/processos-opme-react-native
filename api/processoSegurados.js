@@ -1,10 +1,10 @@
 import { Component } from 'react'
 
-// const prefURI = 'http://localhost:3000'
-const prefURI = 'http://172.20.2.0:3000'
+const prefURI = 'http://localhost:3000'
+//const prefURI = 'http://172.20.2.0:3000'
 
 class SeguradoProc {
-  pegarprocessos = async token => {
+  pegarprocessos = async (token, id) => {
     try {
       const uri = prefURI + '/processos'
       const response = await fetch(uri, {
@@ -15,12 +15,19 @@ class SeguradoProc {
           Authorization: 'Bearer ' + token
         }
       })
-      console.log('Listar processos: ')
-      console.log(response.status)
+      //console.log('Listar processos: ')
+      //console.log(response.status)
       if (response.status == 200) {
         const processos = await response.json()
-        console.log(processos)
-        return processos
+
+        if (id != 0) {
+          const processosFiltrados = processos.filter(
+            processo => processo.segurado && processo.segurado.id === id
+          )
+          return processosFiltrados
+        } else {
+          return processos
+        }
       } else {
         return null
       }
